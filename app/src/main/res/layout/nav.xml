@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/boarder">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="176dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/header"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="72dp"
+            android:layout_height="51dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="142dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="Women Safety"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+                </LinearLayout>
+
+    <!-- contact-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light"
+            android:text="Contact"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/baseline_contacts_24"
+            android:drawablePadding="8dp"/>
+
+    </LinearLayout>
+
+
+    <!-- Location-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Location"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light"
+            android:text="Location"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/baseline_location_on_24"
+            android:drawablePadding="8dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/light"/>
+
+
+    <!--logout-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light"
+            android:text="Logout"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/baseline_logout_24"
+            android:drawablePadding="8dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

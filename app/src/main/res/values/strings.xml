@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Women Safety</string>
+    <string name="submit">20dp</string>
+    <string name="open_drawer">20dp</string>
+    <string name="close_drawer">20dp</string>
+
+    <string name="map_key">AIzaSyCXmYIIiKEpyMxaHYeR5uxev-DVJwhaSA8</string>
+</resources>

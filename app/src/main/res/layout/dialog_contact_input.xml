@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Name"
+        android:padding="8dp" />
+
+    <EditText
+        android:id="@+id/edtPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtName"
+        android:layout_marginTop="8dp"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/btnSaveContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtPhoneNumber"
+        android:layout_marginTop="16dp"
+        android:text="Save"
+        android:padding="8dp" />
+
+</RelativeLayout>
