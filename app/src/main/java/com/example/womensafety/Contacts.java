@@ -4,8 +4,11 @@ package com.example.womensafety;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.location.LocationAvailability;
 
 public class Contacts  {
 
@@ -25,9 +28,13 @@ public class Contacts  {
 
     public Contacts(String name, String phone_number){
         this.name=name;
+        this.phone_number= phone_number;
     }
 
-//    method for setting contact id
+    public Contacts(String contact1_, String s, double v, double v1) {
+    }
+
+    //    method for setting contact id
     public void SetId(int id){
         this.id=id;
     }
@@ -60,5 +67,12 @@ public class Contacts  {
     }
 
 
+    public String getPhoneNumber() {
+        return phone_number;
+    }
 
+    public Location getLocation() {
+
+        return null;
+    }
 }

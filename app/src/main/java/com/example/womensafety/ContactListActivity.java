@@ -16,6 +16,7 @@ public class ContactListActivity  extends AppCompatActivity {
         @SuppressLint("MissingInflatedId")
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
+                System.out.println("contact listt activiety on create");
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.contactist);
 
@@ -23,7 +24,7 @@ public class ContactListActivity  extends AppCompatActivity {
 
                 recyclerViewContacts = findViewById(R.id.recyclerViewContacts);
                 recyclerViewContacts.setLayoutManager(new LinearLayoutManager(this));
-
+                System.out.println("contact click listener");
                 //connecting adapter
                 ArrayList<Contacts> contactlist = null;
                 ContactClickListener listener = null;

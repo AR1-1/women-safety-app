@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
-    tools:context=".Location">
+    tools:context=".LocationActivity">
     >
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Location"
             android:gravity="center"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/light_p"
             android:textSize="36sp"
             />

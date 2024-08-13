@@ -19,6 +19,7 @@ public class ContactAdapter  extends RecyclerView.Adapter<ContactAdapter.ViewHol
 
     //constructor for intializing adapter
 public ContactAdapter(Context mContext, ArrayList<Contacts> contacts,ContactClickListener listener){
+    System.out.println("setting contact adpater");
     this.mContext = mContext;
     this.contacts = contacts;
     this.mInflater = LayoutInflater.from(mContext);

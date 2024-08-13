@@ -1,40 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".Emergency">
+    android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvSelectedContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Contact Details:"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/btnSelectContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Emergency Contact" />
-
-    <!-- Display Selected Contact -->
-    <TextView
-        android:id="@+id/tvSelectedContact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Selected Contact:"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tvSelectedContactName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- Display Selected Contact's Phone Number -->
-    <TextView
-        android:id="@+id/tvSelectedContactPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-
-
-
-</LinearLayout>
+        android:text="Select Contact"
+        android:layout_below="@id/tvSelectedContact"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>

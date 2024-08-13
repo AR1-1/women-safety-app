@@ -52,7 +52,7 @@
     </LinearLayout>
 
 
-    <!-- Location-->
+    <!-- LocationActivity-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,6 +78,26 @@
         android:layout_marginTop="12dp"
         android:background="@color/light"/>
 
+
+    <!--safe place-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/safeplace"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light"
+            android:text="safe place"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/baseline_safety_check_24"
+            android:drawablePadding="8dp"/>
+
+    </LinearLayout>
 
     <!--logout-->
     <LinearLayout

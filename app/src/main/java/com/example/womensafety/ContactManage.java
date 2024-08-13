@@ -14,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -27,9 +30,14 @@ public class ContactManage  extends AppCompatActivity {
     private EditText edName;
     private EditText edPhnum;
     private Button btnsv, btnsw;
-    private ListView listViewConatcts;
+    private ListView listViewContacts;
     private List<Contacts> contacts;
     private ArrayAdapter<String> contactAdapter;
+
+    public static List<String> getEmergencyContacts() {
+
+        return null;
+    }
 
 
     @Override
@@ -41,14 +49,19 @@ public class ContactManage  extends AppCompatActivity {
         edPhnum = findViewById(R.id.add_phn);
         btnsv = findViewById(R.id.btn_save);
         btnsw = findViewById(R.id.btn_showcon);
-        listViewConatcts = findViewById(R.id.listContact);
+        listViewContacts = findViewById(R.id.listContact);
 
         //listing the contacts
         contacts = new ArrayList<>();
         contactAdapter = new ArrayAdapter<>(this, R.layout.data_item_row);
-        listViewConatcts.setAdapter(contactAdapter);
+        listViewContacts.setAdapter(contactAdapter);
 
         // Set an OnClickListener for the "Show Contacts" button
+        TableLayout tableLayout = new TableLayout(this);
+        tableLayout.setLayoutParams(new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.MATCH_PARENT
+        ));
         btnsw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +70,12 @@ public class ContactManage  extends AppCompatActivity {
             }
 
             private void displaySavedContacts() {
-                ContactDbHelper dbHelper = new ContactDbHelper(ContactManage.this);
+                System.out.println("display saved contacts called");
+                DatabaseHelper dbHelper = new DatabaseHelper(ContactManage.this);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
 
                 Cursor cursor = db.query(
-                        ContactDbHelper.TABLE_CONTACTS,
+                        DatabaseHelper.TABLE_CONTACTS,
                         null,
                         null,
                         null,
@@ -76,10 +90,13 @@ public class ContactManage  extends AppCompatActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
                         // Retrieve data from the cursor
-                         @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(ContactDbHelper.COLUMN_NAME));
-                         @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(ContactDbHelper.COLUMN_PHONE));
+                         @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
+                         @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHONE_NUMBER));
                         Log.d("ContactManage", " Name: " + name + ", Phone: " + phone);
-
+                        System.out.println(name);
+                        System.out.println(phone);
+                        System.out.println("-----");
+                        edName.setText(name);
                         // Create a Contacts object and add it to the list
                         savedContacts.add(new Contacts( name, phone));
                     } while (cursor.moveToNext());
@@ -87,12 +104,42 @@ public class ContactManage  extends AppCompatActivity {
                     cursor.close();
                 }
 
+                //listing data
+                String[][] data = new String[savedContacts.size()][2];
+                for(int i =0; i<savedContacts.size();i++){
+                    data[i][0]=savedContacts.get(i).getName();
+                    data[i][1]=savedContacts.get(i).getPhoneNumber();
+                    System.out.println("getting");
+                    System.out.println(data[i][0]);
+                    System.out.println(data[i][1]);
+                }
+
+
+                // Iterate through the data and create rows and columns
+                for (String[] row : data) {
+                    TableRow tableRow = new TableRow(ContactManage.this);
+
+                    for (String cell : row) {
+                        TextView textView = new TextView(ContactManage.this);
+                        textView.setText(cell);
+                        textView.setPadding(16, 16, 16, 16);
+                        tableRow.addView(textView);
+                    }
+
+                    tableLayout.addView(tableRow);
+                }
+
+                // Set the TableLayout as the content view
+                setContentView(tableLayout);
                 db.close();
+
+
 
 
 
             }
         });
+
 
 
         btnsv.setOnClickListener(new View.OnClickListener() {
@@ -129,14 +176,15 @@ public class ContactManage  extends AppCompatActivity {
 
             private void addContactsToDatabase(String name, String phone) {
                 //initializing databasehelper
-                ContactDbHelper dbHelper = new ContactDbHelper(ContactManage.this);
+                System.out.println("add contact to database 2");
+                DatabaseHelper dbHelper = new DatabaseHelper(ContactManage.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();
-                values.put(ContactDbHelper.COLUMN_NAME, name);
-                values.put(ContactDbHelper.COLUMN_PHONE, phone);
+                values.put(DatabaseHelper.COLUMN_NAME, name);
+                values.put(DatabaseHelper.COLUMN_PHONE_NUMBER, phone);
 
-                long newRowId = db.insert(ContactDbHelper.TABLE_CONTACTS, null, values);
+                long newRowId = db.insert(DatabaseHelper.TABLE_CONTACTS, null, values);
 
                 db.close();
 
@@ -150,13 +198,13 @@ public class ContactManage  extends AppCompatActivity {
 
            }
                 // Check the databaseSQLiteOpenHelper databaseHelper = null;
-                ContactDbHelper dbHelper = new ContactDbHelper(ContactManage.this);
+                DatabaseHelper dbHelper = new DatabaseHelper(ContactManage.this);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
 
                 Cursor cursor = db.query(
-                        ContactDbHelper.TABLE_CONTACTS,
+                        DatabaseHelper.TABLE_CONTACTS,
                         null,
-                        ContactDbHelper.COLUMN_NAME + "=?",
+                        DatabaseHelper.COLUMN_NAME + "=?",
                         new String[]{name},
                         null,
                         null,

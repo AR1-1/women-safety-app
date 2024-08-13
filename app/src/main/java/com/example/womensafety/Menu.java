@@ -4,13 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,25 +24,32 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
 DrawerLayout drawerLayout;
 ImageView menu;
-LinearLayout contacts,location,logout;
+ImageButton sos_btn;
+LinearLayout contacts,location,logout,SafePlace;
 FloatingActionButton fab;
+SharedPreferences sharedPreferences;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+        sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
 
         drawerLayout = findViewById(R.id.drawer);
         menu = findViewById(R.id.menu);
         contacts = findViewById(R.id.contact);
+        SafePlace = findViewById(R.id.safeplace);
         location = findViewById(R.id.Location);
+        logout=findViewById(R.id.logout);
 
        FloatingActionButton fab = findViewById(R.id.fab);
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +60,22 @@ FloatingActionButton fab;
         });
 
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Log the user out by clearing the login state in SharedPreferences
+                setLoggedIn(false);
+                Toast.makeText(Menu.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                // Navigate back to the login activity
+                Intent intent = new Intent(Menu.this, Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the activity stack
+                startActivity(intent);
+                finish(); // Close the LogoutActivity
+
+            }
+        });
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,24 +94,38 @@ FloatingActionButton fab;
             }
         });
 
-        location.setOnClickListener(new View.OnClickListener() {
+
+        SafePlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Menu.this,Location.class);
+                Log.d("MenuActivity", "SafePlace button clicked");
+
+                Intent intent = new Intent(Menu.this,SafePlace.class);
+                startActivity(intent);
             }
         });
 
-      /*  logout.setOnClickListener(new View.OnClickListener() {
+
+
+        location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Menu.this,"Logout",Toast.LENGTH_SHORT).show();
-                redirectActivity(Menu.this,Login.class);
+                redirectActivity(Menu.this, LocationActivity.class);
             }
-        });*/
+        });
+
+
 
 
 
     }
+
+    private void setLoggedIn(boolean loggedIn) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("loggedIn", loggedIn);
+        editor.apply();
+    }
+
 
     private void showContactInputDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -99,6 +138,9 @@ FloatingActionButton fab;
         Button btnSave = dialogView.findViewById(R.id.btnSaveContact);
 
         final AlertDialog dialog = builder.create();
+
+
+
 
 
 
@@ -123,16 +165,18 @@ FloatingActionButton fab;
     }
 
     private void addContactToDatabase(String name, String phone) {
-        ContactDbHelper dbHelper = new ContactDbHelper(this);
+        System.out.println("adding the contact to database");
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ContactDbHelper.COLUMN_NAME, name);
-        values.put(ContactDbHelper.COLUMN_PHONE, phone);
+        values.put(DatabaseHelper.COLUMN_NAME, name);
+        values.put(DatabaseHelper.COLUMN_PHONE_NUMBER, phone);
 
-        long newRowId = db.insert(ContactDbHelper.TABLE_CONTACTS, null, values);
+        long newRowId = db.insert(DatabaseHelper.TABLE_CONTACTS, null, values);
 
         db.close();
+        System.out.println("added ");
     }
 
     public static void openDrawer(DrawerLayout drawerLayout) {
@@ -156,5 +200,7 @@ FloatingActionButton fab;
         super.onPause();
         closeDrawer(drawerLayout);
     }
+
+
 }
 
